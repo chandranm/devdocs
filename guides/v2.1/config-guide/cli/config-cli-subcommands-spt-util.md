@@ -86,10 +86,14 @@ Run the following commands in the order shown to display the paths to the applic
 
   For example, `cd /var/www/magento2`
 
-	<div class="bs-callout bs-callout-info" id="info" markdown="1">
-  The commands run properly _only_ from your Magento installation directory.
-	</div>
+{%
+include note.html
+type='info'
+content='The commands run properly _only_ from your Magento installation directory.'
+%}
+	
 2.  `php bin/magento support:utility:paths` creates `<your Magento install dir>/var/support/Paths.php`, which lists the paths to all application used by the utility.
+
 3.  `php bin/magento support:utility:check` displays the file system paths.
 
 A sample follows:
