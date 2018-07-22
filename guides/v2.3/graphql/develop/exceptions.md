@@ -1,7 +1,6 @@
 ---
-layout: default
 group: graphql
-title: Exceptions
+title: Exception handling
 version: 2.3
 github_link: graphql/develop/exceptions.md
 ---
