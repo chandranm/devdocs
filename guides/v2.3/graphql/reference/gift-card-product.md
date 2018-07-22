@@ -1,5 +1,4 @@
 ---
-layout: default
 group: graphql
 title: GiftCardProduct endpoint
 version: 2.3
@@ -41,7 +40,7 @@ The following query returns information about gift card product `GiftCard25`. (I
 
 {% highlight json %}
 {
-   products(filter: {sku: {eq: "{$productSku}"}})
+   products(filter: {sku: {eq: "GiftCard25"}})
    {
        items{
            id
@@ -64,7 +63,6 @@ The following query returns information about gift card product `GiftCard25`. (I
               value
               attribute_id
               website_value
-            }
            }
        }
    }

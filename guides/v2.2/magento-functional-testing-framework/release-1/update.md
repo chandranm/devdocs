@@ -1,5 +1,4 @@
 ---
-layout: default
 group: mftf
 title: Update the Magento Functional Testing Framework and pull new tests
 version: 2.2
@@ -7,8 +6,8 @@ github_link: magento-functional-testing-framework/release-1/update.md
 functional_areas:
  - Testing
 redirect_from:
-    - guides/v2.2/magento-functional-testing-framework/update.html
-    - guides/v2.2/magento-functional-testing-framework/1.0/update.html
+ - /guides/v2.2/magento-functional-testing-framework/update.html
+ - /guides/v2.2/magento-functional-testing-framework/1.0/update.html
 mftf-release: 1.0.0
 ---
 
@@ -36,19 +35,19 @@ When pulling the latest Magento code, you need to update the corresponding Compo
 * Go to the `magento2/dev/tests/acceptance` directory:
 
 ```bash
-$ cd dev/tests/acceptance
+cd dev/tests/acceptance
 ```
 
 * Run `composer update` to get the latest framework version:
 
 ```bash
-$ composer update
+composer update
 ```
 
 * Generate newly pulled tests: 
 
 ```bash
-$ vendor/bin/robo generate:tests
+vendor/bin/robo generate:tests
 ```
 
 <!-- LINK DEFINITIONS -->

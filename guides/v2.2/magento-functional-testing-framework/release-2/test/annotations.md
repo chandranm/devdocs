@@ -1,40 +1,44 @@
 ---
-layout: default
 group: mftf
-title: Annotations in the Magento Functional Testing Framework
+title: Annotations
 version: 2.2
 github_link: magento-functional-testing-framework/release-2/test/annotations.md
 functional_areas:
  - Testing
-mftf-release: 2.0.2
+mftf-release: 2.2.0
 ---
 
 _This topic was updated due to the {{page.mftf-release}} MFTF release._
 {: style="text-align: right"}
 
-Annotations are essentially comments in the code.
-(In PHP, they all are marked by a preceding `@` symbol.)
-Within [test methods], annotations are contained within their own node.
+Annotations are essentially comments in the code. In PHP, they all are marked by a preceding `@` symbol.
+
+Within [tests], annotations are contained within their own node.
 
 ## Principles
 
-* All annotations are within an `<annotations>` element
-* Each element within corresponds to a supported annotation type
-* There is no distinction made in XML between Codeception annotations and Allure annotations
-* Each annotation contains only one value.
+The following conventions apply to annotations in the Magento Functional Testing Framework (MFTF):
+
+- All annotations are within an `<annotations>` element.
+- Each element within corresponds to a supported annotation type.
+- There is no distinction made in XML between Codeception annotations and Allure annotations.
+- Each annotation contains only one value.
 If multiple annotation values are supported and required each value requires a separate annotation.
+
+Recommended use cases of the annotation types:
+- [features] - report grouping, a set of tests that verify a feature.
+- [stories] - report grouping, a set of tests that verify a story.
+- [group] - general functionality grouping.
+- [title] - description of the test purpose.
+- [description] - description of how the test achieves the purpose defined in the title.
 
 ## Example
 
 ```xml
 <annotations>
-
-       <features value="Category Creation"/>
-
-       <title value="Create a Category via Admin"/>
-
-       <group value="category"/>
-
+    <features value="Category Creation"/>
+    <title value="Create a Category via Admin"/>
+    <group value="category"/>
 </annotations>
 ```
 
@@ -42,13 +46,11 @@ If multiple annotation values are supported and required each value requires a s
 
 ### description
 
-_Implementation of an Allure tag [`@Description`]_
-
-Metadata for report.
+The `<description>` element is an implementation of a [`@Description`] Allure tag; Metadata for report.
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 #### Example
 
@@ -56,25 +58,15 @@ value|string|required
 <description value="Add Catalog via Admin"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@Description("Add Catalog via Admin")
-```
-
-***
-***
-
 ### features
 
-_Implementation of an Allure tag [`@Features`]_
+The `<features>` element is an implementation of a [`@Features`] Allure tag.
 
-Sets a string that will be displayed as a **Feature** within the Allure report.
-Tests under the same feature are grouped together in the report.
+`<features>` sets a string that will be displayed as a feature within the Allure report. Tests under the same feature are grouped together in the report.
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 #### Example
 
@@ -83,51 +75,42 @@ value|string|required
 <features value="Add/Edit"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@Features({"Catalog", "Add/Edit"})
-```
-
-***
-***
-
 ### group
 
-_Implementation of a Codeception tag [`@group`]_
+The `<group>` element is an implementation of a [`@group`] Codeception tag.
 
-Specifies a string to identify and collect tests together.
+`<group>` specifies a string to identify and collect tests together.
 Any test can be a part of multiple groups.
-The purpose of grouping is to create a set of test for a purpose (e.g. all Cart tests, all Slow tests) and run them together.
+The purpose of grouping is to create a set of test for a functionality or purpose, such as all cart tests or all slow tests and run them together locally.
 
-Attribute|Type|Use
----|---|--
-value|string|required
+{% include note.html
+type="warning"
+content="Group values cannot collide with [suite] names."
+%}
+
+{% include note.html
+type="tip"
+content="Add `<group value=\"skip\"/>` to the test if you want to skip it during test run."
+%}
+
+Attribute|Type|Use|Definition
+---|---|---|---
+`value`|string|required|A value that is used to group tests. It should be lower case. `skip` is reserved to ignore content of the test and generate an empty test.
 
 #### Example
 
 ```xml
-<group value="catalog"/>
+<group value="category"/>
 ```
-
-Generated PHP code:
-
-``` php?start_inline=1
-@group catalog
-```
-
-***
-***
 
 ### return
 
-_Implementation of a Codeception tag [`@return`]_
-
-Specifies what is returned from a test execution.
+The `<return>` element is an implementation of a [`@return`] Codeception tag.
+It specifies what is returned from a test execution.
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 
 #### Example
@@ -136,24 +119,13 @@ value|string|required
 <return value="void"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@return void
-```
-
-***
-***
-
 ### severity
 
-_Implementation of an Allure tag [`@Severity`]_
-
-Metadata for report.
+The `<return>` element is an implementation of a [`@Severity`] Allure tag; Metadata for report.
 
 Attribute|Type|Use|Acceptable values
 ---|---|---|---
-value|string|required|`"BLOCKER"`, `"CRITICAL"`, `"NORMAL"`, `"MINOR"`, `"TRIVIAL"`
+`value`|string|required|`MINOR`, `AVERAGE`, `MAJOR`, `BLOCKER`, `CRITICAL`
 
 #### Example
 
@@ -161,24 +133,14 @@ value|string|required|`"BLOCKER"`, `"CRITICAL"`, `"NORMAL"`, `"MINOR"`, `"TRIVIA
 <severity value="CRITICAL"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@Severity(level = SeverityLevel::CRITICAL)
-```
-
-***
-***
-
 ### stories
 
-_Implementation of an Allure tag [`@Stories`]_
-
-Same functionality as [`features`](#features), within the **Story** report group.
+The `<stories>` element is an implementation of a [`@Stories`] Allure tag.
+It has the same functionality as [features], within the Story report group.
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 #### Example
 
@@ -187,27 +149,17 @@ value|string|required
 <stories value="Edit Catalog"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@Stories({"Add Catalog", "Edit Catalog"})
-```
-
-***
-***
-
 ### testCaseId
 
-_Implementation of an Allure tag [`@TestCaseId`]_
+The `<testCaseId>` element is an implementation of a [`@TestCaseId`] Allure tag. It specifies a ZephyrId for a test.
 
-Specifies a ZephyrId for a test.
-If the linkage is set up correctly in Allure config, the test will have a hyperlink to the Zephyr test case in the report.
+If the linkage is set up correctly in the Allure config, the test will have a hyperlink to the Zephyr test case in the report.
 
-[Lean more about setup instructions in Allure](https://github.com/allure-framework/allure1/wiki/Test-Case-ID)
+Learn more about [setup instructions in Allure].
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 #### Example
 
@@ -215,50 +167,13 @@ value|string|required
 <testCaseId value="#"/>
 ```
 
-Generated PHP code:
-
-``` php?start_inline=1
-@TestCaseId("#")
-```
-
-***
-***
-
-### useCaseId
-
-_Implementation of a custom tag `@UseCaseId`_
-
-Specifies Use Case Id for a test.
-
-Ignored by Allure configuration at the moment, as Allure implementation is not complete.
-
-Attribute|Type|Use
----|---|--
-value|string|required
-
-#### Example
-
-```xml
-<useCaseId value="USECASE-1"/>
-```
-Generated PHP code:
-
-``` php?start_inline=1
-@UseCaseId("USECASE-1")
-```
-
-***
-***
-
 ### title
 
-_Implementation of an Allure tag [`@Title`]_
-
-Metadata for report.
+The `<title>` element is an implementation of [`@Title`] Allure tag; Metadata for report.
 
 Attribute|Type|Use
 ---|---|--
-value|string|required
+`value`|string|required
 
 #### Example
 
@@ -266,18 +181,23 @@ value|string|required
 <title value="Add Catalog"/>
 ```
 
-Generated PHP code:
+### useCaseId
 
-``` php?start_inline=1
-@Title("Add Catalog")
+The `<useCaseId>` element is an implementation of a `@UseCaseId` custom tag. It specifies the use case ID for a test and is ignored by Allure configuration at the moment, as Allure implementation is not complete.
+
+Attribute|Type|Use
+---|---|--
+`value`|string|required
+
+#### Example
+
+```xml
+<useCaseId value="USECASE-1"/>
 ```
 
-<!-- LINKS DEFINITIONS-->
-
-[test methods]: ../test.html#test-tag
+<!-- Link definitions -->
 
 [`@Description`]: https://devhub.io/zh/repos/allure-framework-allure-phpunit#extended-test-class-or-test-method-description
-[`@env`]: http://codeception.com/docs/07-AdvancedUsage#Environments
 [`@Features`]: https://devhub.io/zh/repos/allure-framework-allure-phpunit#map-test-classes-and-test-methods-to-features-and-stories
 [`@group`]: http://codeception.com/docs/07-AdvancedUsage#Groups
 [`@return`]: http://codeception.com/docs/07-AdvancedUsage#Examples
@@ -285,7 +205,12 @@ Generated PHP code:
 [`@Stories`]: https://devhub.io/zh/repos/allure-framework-allure-phpunit#map-test-classes-and-test-methods-to-features-and-stories
 [`@TestCaseId`]: https://github.com/allure-framework/allure1/wiki/Test-Case-ID
 [`@Title`]: https://devhub.io/zh/repos/allure-framework-allure-phpunit#human-readable-test-class-or-test-method-title
-
-<!-- Abbreviations -->
-
-*[MFTF]: Magento Functional Testing Framework
+[description]: #description
+[features]: #features
+[group]: #group
+[setup instructions in Allure]: https://github.com/allure-framework/allure1/wiki/Test-Case-ID
+[severity]: #severity
+[stories]: #stories
+[suite]: ../suite.html
+[tests]: ../test.html
+[title]: #title

@@ -1,5 +1,4 @@
 ---
-layout: default
 group: fedg
 subgroup: C_Templates
 title: Templates XSS security
@@ -11,7 +10,7 @@ functional_areas:
   - Frontend
 ---
 
-<h2>Security measures against XSS attacks</h2>
+## Security measures against XSS attacks
 
 To prevent <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS</a> issues Magento recommends the following rules for escaping output in templates:
 
